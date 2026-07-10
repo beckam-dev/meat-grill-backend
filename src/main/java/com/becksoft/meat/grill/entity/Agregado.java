@@ -15,10 +15,10 @@ public class Agregado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_agregado")
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_insumo")
+    @OneToOne
+    @JoinColumn(name = "id_insumo",  nullable = false)
     private Insumo insumo;
-    @Column(name = "unit_price")
+    @Column(name = "unit_price", nullable = false)
     private BigDecimal unitPrice;
 
     public Agregado(Insumo insumo, BigDecimal unitPrice) {
