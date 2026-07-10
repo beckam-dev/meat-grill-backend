@@ -26,7 +26,7 @@ public class Insumo {
 
     public void rename(String name){
 
-        if(this.name == null){
+        if(name == null){
             throw new IllegalArgumentException("Name cannot be null");
         }
 
@@ -34,7 +34,7 @@ public class Insumo {
     }
 
     public void changeType(InsumoType type){
-        if(this.type == null){
+        if(type == null){
             throw new IllegalArgumentException("Type cannot be null");
         }
         this.type = type;
