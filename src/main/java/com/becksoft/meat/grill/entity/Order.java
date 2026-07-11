@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,7 +31,7 @@ public class Order {
     @JoinTable(
             name = "orders_mesas",
             joinColumns = @JoinColumn(name = "id_order"),
-            inverseJoinColumns = @JoinColumn(name = "id_mesas")
+            inverseJoinColumns = @JoinColumn(name = "id_mesa")
     )
     private List<Mesa> mesas;
     @Column(name = "fecha_order")
@@ -44,7 +45,7 @@ public class Order {
         assignEmployee(employee);
         assignModalidad(orderType);
         assingClient(nombreCliente);
-        assignMesa(mesas);
+        assignMesa(mesas, orderType);
         now();
     }
 
@@ -69,11 +70,11 @@ public class Order {
         this.nombreCliente = nombreCliente;
     }
 
-    private void assignMesa(List<Mesa> mesas) {
-        if (mesas == null) {
-            throw new IllegalArgumentException("Mesa(s) cannot be null.");
+    private void assignMesa(List<Mesa> mesas, OrderType orderType) {
+        if (orderType == OrderType.PARA_MESA && (mesas == null || mesas.isEmpty())) {
+            throw new IllegalArgumentException("Orders 'PARA_MESA' must have at least one assigned mesa.");
         }
-        this.mesas = mesas;
+        this.mesas = (mesas != null) ? mesas : new ArrayList<>();
     }
 
     private void now() {
