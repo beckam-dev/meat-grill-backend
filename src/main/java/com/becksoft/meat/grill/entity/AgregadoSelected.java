@@ -22,46 +22,44 @@ public class AgregadoSelected {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_agregado", nullable = false)
     private Agregado agregado;
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private int quantity;
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private BigDecimal price;
 
     public AgregadoSelected(PlatoSelected platoSelected, Agregado agregado, int quantity) {
-        assingPlatoSelected(platoSelected);
-        assingQuantity(quantity);
-        assingAgregado(agregado);
-        sendAgregado();
+        assignPlatoSelected(platoSelected);
+        assignAgregado(agregado);
+        assignQuantity(quantity);
+        calcularPrecio();
+
+        this.platoSelected.addAgregado(this);
     }
 
-    private void assingPlatoSelected(PlatoSelected platoSelected) {
+    private void assignPlatoSelected(PlatoSelected platoSelected) {
         if (platoSelected == null) {
-            throw new IllegalArgumentException("platoSelected cannot be null");
+            throw new IllegalArgumentException("PlatoSelected cannot be null.");
         }
         this.platoSelected = platoSelected;
     }
 
-    private void assingAgregado(Agregado agregado) {
+    private void assignAgregado(Agregado agregado) {
         if (agregado == null) {
-            throw new IllegalArgumentException("agregado cannot be null");
+            throw new IllegalArgumentException("Agregado cannot be null.");
         }
         this.agregado = agregado;
-        calcularPrecio();
     }
 
-    private void assingQuantity(int quantity) {
+    private void assignQuantity(int quantity) {
         if (quantity <= 0) {
-            throw new IllegalArgumentException("quantity cannot be negative");
+            throw new IllegalArgumentException("Quantity must be greater than zero.");
         }
         this.quantity = quantity;
     }
 
     private void calcularPrecio() {
-        this.price = this.agregado.getUnitPrice().multiply(new BigDecimal(this.quantity));
-    }
-
-    private void sendAgregado() {
-        this.platoSelected.addAgregado(this);
+        BigDecimal unitPrice = this.agregado.getUnitPrice();
+        this.price = unitPrice.multiply(new BigDecimal(this.quantity));
     }
 
 }

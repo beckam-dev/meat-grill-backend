@@ -1,10 +1,12 @@
 package com.becksoft.meat.grill.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -25,9 +27,13 @@ public class PlatoSelected {
     private Plato plato;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private PlatoStatus status = PlatoStatus.PENDENTE;
-    @Column(name = "subtotal")
+    private PlatoStatus status = PlatoStatus.PENDIENTE;
+    @Column(name = "subtotal", nullable = false)
     private BigDecimal subtotal;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "platoSelected", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AgregadoSelected> agregados = new ArrayList<>();
 
     public PlatoSelected(Order order, Plato plato) {
         assingOrder(order);
@@ -36,13 +42,13 @@ public class PlatoSelected {
 
     private void assingOrder(Order order) {
         if (order == null) {
-            throw new IllegalArgumentException("Order cannot be null");
+            throw new IllegalArgumentException("Order cannot be null.");
         }
         this.order = order;
     }
     private void assingPlato(Plato plato) {
         if (plato == null) {
-            throw new IllegalArgumentException("Plato cannot be null");
+            throw new IllegalArgumentException("Plato cannot be null.");
         }
         this.plato = plato;
         this.subtotal = this.plato.getUnitPrice();
@@ -50,16 +56,26 @@ public class PlatoSelected {
 
     public void addAgregado(AgregadoSelected agregado) {
         if (agregado == null) {
-            throw new IllegalArgumentException("Agregado cannot be null");
+            throw new IllegalArgumentException("Agregado cannot be null.");
         }
+        this.agregados.add(agregado);
         this.subtotal = this.subtotal.add(agregado.getPrice());
     }
 
     public void removeAgregado(AgregadoSelected agregado) {
         if (agregado == null) {
-            throw new IllegalArgumentException("Agregado cannot be null");
+            throw new IllegalArgumentException("Agregado cannot be null.");
         }
-        this.subtotal = this.subtotal.subtract(agregado.getPrice());
+        if (this.agregados.remove(agregado)) {
+            this.subtotal = this.subtotal.subtract(agregado.getPrice());
+        }
+    }
+
+    public void changeStatus(PlatoStatus status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+        this.status = status;
     }
 
 }

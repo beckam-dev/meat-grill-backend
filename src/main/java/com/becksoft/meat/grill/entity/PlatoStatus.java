@@ -1,7 +1,7 @@
 package com.becksoft.meat.grill.entity;
 
 public enum PlatoStatus {
-    PENDENTE,
+    PENDIENTE,
     PAGADO,
     CANCELADO,
     EN_MESA,
