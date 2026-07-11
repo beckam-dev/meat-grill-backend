@@ -20,7 +20,7 @@ public class AgregadoSelected {
     @JoinColumn(name = "id_plato_selected", nullable = false)
     private PlatoSelected platoSelected;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_agregado")
+    @JoinColumn(name = "id_agregado", nullable = false)
     private Agregado agregado;
     @Column(name = "quantity")
     private int quantity;
