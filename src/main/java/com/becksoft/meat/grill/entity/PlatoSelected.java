@@ -36,17 +36,17 @@ public class PlatoSelected {
     private List<AgregadoSelected> agregados = new ArrayList<>();
 
     public PlatoSelected(Order order, Plato plato) {
-        assingOrder(order);
-        assingPlato(plato);
+        assignOrder(order);
+        assignPlato(plato);
     }
 
-    private void assingOrder(Order order) {
+    private void assignOrder(Order order) {
         if (order == null) {
             throw new IllegalArgumentException("Order cannot be null.");
         }
         this.order = order;
     }
-    private void assingPlato(Plato plato) {
+    private void assignPlato(Plato plato) {
         if (plato == null) {
             throw new IllegalArgumentException("Plato cannot be null.");
         }
