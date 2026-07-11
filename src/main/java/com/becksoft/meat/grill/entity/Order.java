@@ -26,8 +26,12 @@ public class Order {
     private OrderType orderType;
     @Column(name = "nombre_cliente", nullable = true)
     private String nombreCliente;
-    @JoinColumn(name = "mesas_cliente")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(
+            name = "orders_mesas",
+            joinColumns = @JoinColumn(name = "id_order"),
+            inverseJoinColumns = @JoinColumn(name = "id_mesas")
+    )
     private List<Mesa> mesas;
     @Column(name = "fecha_order")
     private LocalDateTime fechaOrder;
