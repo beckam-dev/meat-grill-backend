@@ -22,12 +22,20 @@ public class BebidaOption {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_bebida_size", nullable = false)
     private BebidaSize bebidaSize;
-    @Column(name = "unit_prize", nullable = false)
+    @Column(name = "unit_price", nullable = false)
     private BigDecimal price;
 
-    public BebidaOption(BebidaSize bebidaSize, BigDecimal price) {
+    public BebidaOption(Bebida bebida, BebidaSize bebidaSize, BigDecimal price) {
+        assingBebida(bebida);
         assingSize(bebidaSize);
         assingPrice(price);
+    }
+
+    private void assingBebida(Bebida bebida) {
+        if (bebida == null) {
+            throw new IllegalArgumentException("bebida cannot be null");
+        }
+        this.bebida = bebida;
     }
 
     private void assingSize(BebidaSize size) {
