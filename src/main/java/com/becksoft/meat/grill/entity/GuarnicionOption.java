@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "guarniciones_options")
-public class GuarnicionOpcion {
+public class GuarnicionOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class GuarnicionOpcion {
     @JoinColumn(name = "id_insumo", nullable = false)
     private Insumo insumo;
 
-    public GuarnicionOpcion(Guarnicion guarnicion, Insumo insumo){
+    public GuarnicionOption(Guarnicion guarnicion, Insumo insumo){
         assingGuarnicion(guarnicion);
         assingInsumo(insumo);
     }

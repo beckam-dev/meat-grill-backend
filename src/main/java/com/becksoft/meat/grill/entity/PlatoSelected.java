@@ -33,6 +33,24 @@ public class PlatoSelected {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "platoSelected", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GuarnicionSelected> guarniciones = new ArrayList<>();
+
+    public void addGuarnicion(GuarnicionSelected guarnicion) {
+        if (guarnicion == null) {
+            throw new IllegalArgumentException("Guarnicion cannot be null.");
+        }
+        this.guarniciones.add(guarnicion);
+    }
+
+    public void removeGuarnicion(GuarnicionSelected guarnicion) {
+        if (guarnicion == null) {
+            throw new IllegalArgumentException("Guarnicion cannot be null.");
+        }
+        this.guarniciones.remove(guarnicion);
+    }
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "platoSelected", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AgregadoSelected> agregados = new ArrayList<>();
 
     public PlatoSelected(Order order, Plato plato) {
@@ -46,6 +64,7 @@ public class PlatoSelected {
         }
         this.order = order;
     }
+
     private void assignPlato(Plato plato) {
         if (plato == null) {
             throw new IllegalArgumentException("Plato cannot be null.");
