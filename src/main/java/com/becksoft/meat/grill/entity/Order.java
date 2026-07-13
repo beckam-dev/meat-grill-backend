@@ -1,5 +1,7 @@
 package com.becksoft.meat.grill.entity;
 
+import com.becksoft.meat.grill.enums.OrderStatus;
+import com.becksoft.meat.grill.enums.OrderType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

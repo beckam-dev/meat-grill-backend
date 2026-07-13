@@ -1,11 +1,11 @@
 package com.becksoft.meat.grill.entity;
 
+import com.becksoft.meat.grill.enums.WorkWeekStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAdjusters;
 
 @Getter
 @NoArgsConstructor

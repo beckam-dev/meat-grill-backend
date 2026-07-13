@@ -1,5 +1,6 @@
 package com.becksoft.meat.grill.entity;
 
+import com.becksoft.meat.grill.enums.PlatoStatus;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;

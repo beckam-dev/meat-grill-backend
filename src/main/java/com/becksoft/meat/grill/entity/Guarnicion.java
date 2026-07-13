@@ -1,5 +1,6 @@
 package com.becksoft.meat.grill.entity;
 
+import com.becksoft.meat.grill.enums.GuarnicionGroup;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

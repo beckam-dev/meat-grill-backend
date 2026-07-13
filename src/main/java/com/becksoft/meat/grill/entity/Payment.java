@@ -1,5 +1,6 @@
 package com.becksoft.meat.grill.entity;
 
+import com.becksoft.meat.grill.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

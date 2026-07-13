@@ -1,5 +1,6 @@
 package com.becksoft.meat.grill.entity;
 
+import com.becksoft.meat.grill.enums.InsumoType;
 import jakarta.persistence.*;
 import lombok.*;
 

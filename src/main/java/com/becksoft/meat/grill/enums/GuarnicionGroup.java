@@ -1,4 +1,4 @@
-package com.becksoft.meat.grill.entity;
+package com.becksoft.meat.grill.enums;
 
 public enum GuarnicionGroup {
     ARROZ,
