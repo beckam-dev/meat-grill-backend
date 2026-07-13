@@ -38,33 +38,48 @@ public class CashSession {
     @Column(name = "status", nullable = false)
     private CashSessionStatus status = CashSessionStatus.OPEN;
 
-    public CashSession(WorkWeek week, Employee employee) {
-        assingWeek(week);
-        assingEmployee(employee);
-        assingDate();
+    public CashSession(WorkWeek week, Employee employee, BigDecimal openingCash) {
+        assignWeek(week);
+        assignEmployee(employee);
+        assignOpeningCash(openingCash);
+        assignDate();
     }
 
-    private void assingWeek(WorkWeek week) {
+    private void assignOpeningCash(BigDecimal openingCash) {
+        if (openingCash == null || openingCash.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Opening cash cannot be null or negative.");
+        }
+        this.openingCash = openingCash;
+    }
+
+    private void assignWeek(WorkWeek week) {
         if (week == null) {
             throw new IllegalArgumentException("week cannot be null");
         }
         this.week = week;
     }
 
-    private void assingEmployee(Employee employee) {
+    private void assignEmployee(Employee employee) {
         if (employee == null) {
             throw new IllegalArgumentException("employee cannot be null");
         }
         this.employee = employee;
     }
 
-    private void assingDate() {
+    private void assignDate() {
         workDate = LocalDateTime.now().getDayOfWeek();
     }
 
-    private void cerrarCaja() {
-        closedAt = LocalDateTime.now();
-        status = CashSessionStatus.CLOSED;
+    public void cerrarCaja(BigDecimal closingCash) {
+        if (this.status == CashSessionStatus.CLOSED) {
+            throw new IllegalStateException("This cash session is already closed.");
+        }
+        if (closingCash == null || closingCash.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Closing cash cannot be null or negative.");
+        }
+        this.closingCash = closingCash;
+        this.closedAt = LocalDateTime.now();
+        this.status = CashSessionStatus.CLOSED;
     }
 
 }
