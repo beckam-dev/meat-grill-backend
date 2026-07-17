@@ -19,22 +19,22 @@ public class GuarnicionSelected {
     private PlatoSelected platoSelected;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_option", nullable = false)
-    private GuarnicionOption guarnicionselected;
+    private GuarnicionOption guarnicionSeleccionada;
 
     public GuarnicionSelected(GuarnicionOption guarnicionseleccionada, PlatoSelected platoseleccionado) {
-        assingGuarnicion(guarnicionseleccionada);
-        assingPlatoSelected(platoseleccionado);
+        assignGuarnicion(guarnicionseleccionada);
+        assignPlatoSelected(platoseleccionado);
         send();
     }
 
-    private void assingGuarnicion(GuarnicionOption guarnicionseleccionada) {
+    private void assignGuarnicion(GuarnicionOption guarnicionseleccionada) {
         if (guarnicionseleccionada == null) {
             throw new IllegalArgumentException("guarnicion cannot be null");
         }
-        this.guarnicionselected = guarnicionseleccionada;
+        this.guarnicionSeleccionada = guarnicionseleccionada;
     }
 
-    private void assingPlatoSelected(PlatoSelected platoSeleccionado) {
+    private void assignPlatoSelected(PlatoSelected platoSeleccionado) {
         if (platoSeleccionado == null) {
             throw new IllegalArgumentException("plato cannot be null");
         }
