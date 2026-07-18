@@ -28,7 +28,7 @@ public class CashSession {
     @Column(name = "work_date", nullable = false)
     private DayOfWeek workDate;
     @Column(name = "opened_at", nullable = false)
-    private  LocalDateTime openedAt = LocalDateTime.now();
+    private LocalDateTime openedAt = LocalDateTime.now();
     @Column(name = "closedAt", nullable = true)
     private LocalDateTime closedAt;
     @Column(name = "opening_cash")
@@ -38,6 +38,8 @@ public class CashSession {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private CashSessionStatus status = CashSessionStatus.OPEN;
+    @Column(name = "descuadre")
+    private BigDecimal descuadre;
 
     public CashSession(WorkWeek week, Employee employee, BigDecimal openingCash) {
         assignWeek(week);
@@ -71,7 +73,7 @@ public class CashSession {
         workDate = LocalDateTime.now().getDayOfWeek();
     }
 
-    public void cerrarCaja(BigDecimal closingCash) {
+    public void cerrarCaja(BigDecimal closingCash, BigDecimal expectedCash) {
         if (this.status == CashSessionStatus.CLOSED) {
             throw new IllegalStateException("This cash session is already closed.");
         }
@@ -80,6 +82,7 @@ public class CashSession {
         }
         this.closingCash = closingCash;
         this.closedAt = LocalDateTime.now();
+        this.descuadre = closingCash.subtract(expectedCash);
         this.status = CashSessionStatus.CLOSED;
     }
 
