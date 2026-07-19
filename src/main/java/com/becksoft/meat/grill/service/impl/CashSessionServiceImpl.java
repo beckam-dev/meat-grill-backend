@@ -6,7 +6,6 @@ import com.becksoft.meat.grill.entity.WorkWeek;
 import com.becksoft.meat.grill.enums.CashSessionStatus;
 import com.becksoft.meat.grill.enums.MovementType;
 import com.becksoft.meat.grill.enums.PaymentMethod;
-import com.becksoft.meat.grill.enums.WorkWeekStatus;
 import com.becksoft.meat.grill.repository.*;
 import com.becksoft.meat.grill.service.CashSessionService;
 import com.becksoft.meat.grill.service.WorkWeekService;
