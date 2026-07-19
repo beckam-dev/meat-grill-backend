@@ -15,13 +15,13 @@ import java.util.List;
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     // Metodo para encontrar todos los pagos de un día en específico
-    List<Payment> findByCashSessionId(Long sessionId);
+    List<Payment> findBySessionId(Long sessionId);
     // Metodo para encontrar todos los pagos de una semana en específica sin necesidad de específicar el tipo de pago
-    List<Payment> findByWeek(WorkWeek workWeek);
+    List<Payment> findBySessionWeek(WorkWeek workWeek);
     // Metodo para traer todos los pagos filtrados por el metodo de pago (YAPE, PLIN, EFECTIVO)
-    List<Payment> findByCashSessionWeekAndPaymentMethod(WorkWeek week, PaymentMethod paymentMethod);
+    List<Payment> findBySessionWeekAndPaymentMethod(WorkWeek week, PaymentMethod paymentMethod);
     // Consulta optimizada para sumar directamente los montos en la BD (Evita traer toda la lista a memoria)
-    @Query("SELECT COALESCE(SUM(p.amount), 0) FROM Payment p WHERE p.cashSession.id = :sessionId AND p.paymentMethod = :method")
+    @Query("SELECT COALESCE(SUM(p.amount), 0) FROM Payment p WHERE p.session.id = :sessionId AND p.paymentMethod = :method")
     BigDecimal sumAmountBySessionAndMethod(@Param("sessionId") Long sessionId, @Param("method") PaymentMethod method);
 
 }
