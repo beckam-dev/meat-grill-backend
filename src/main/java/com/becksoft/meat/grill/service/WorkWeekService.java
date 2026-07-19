@@ -4,6 +4,6 @@ import com.becksoft.meat.grill.entity.WorkWeek;
 
 public interface WorkWeekService {
 
-    WorkWeek abrirNuevaSemanaLaboral();
+    WorkWeek getOrCreateValidWorkWeek();
 
 }

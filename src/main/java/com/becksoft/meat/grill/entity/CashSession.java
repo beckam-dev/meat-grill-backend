@@ -23,7 +23,7 @@ public class CashSession {
     @JoinColumn(name = "id_week", nullable = false)
     private WorkWeek week;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_employee")
+    @JoinColumn(name = "id_employee", nullable = false)
     private Employee employee;
     @Column(name = "work_date", nullable = false)
     private DayOfWeek workDate;

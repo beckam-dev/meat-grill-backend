@@ -1,6 +1,7 @@
 package com.becksoft.meat.grill.service.impl;
 
 import com.becksoft.meat.grill.entity.CashSession;
+import com.becksoft.meat.grill.entity.Employee;
 import com.becksoft.meat.grill.entity.WorkWeek;
 import com.becksoft.meat.grill.enums.CashSessionStatus;
 import com.becksoft.meat.grill.enums.MovementType;
@@ -8,6 +9,7 @@ import com.becksoft.meat.grill.enums.PaymentMethod;
 import com.becksoft.meat.grill.enums.WorkWeekStatus;
 import com.becksoft.meat.grill.repository.*;
 import com.becksoft.meat.grill.service.CashSessionService;
+import com.becksoft.meat.grill.service.WorkWeekService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,21 +21,20 @@ import java.math.BigDecimal;
 public class CashSessionServiceImpl implements CashSessionService {
 
     private final CashSessionRepository cashSessionRepository;
-    private final WorkWeekRepository workWeekRepository;
     private final PaymentRepository paymentRepository;
     private final MovementRepository movementRepository;
     private final EmployeeRepository employeeRepository;
+    private final WorkWeekService workWeekService;
 
     @Override
     @Transactional
     public CashSession openSession(Long employeeId, BigDecimal openingCash) {
         cashSessionRepository.findByStatus(CashSessionStatus.OPEN)
                 .ifPresent(s -> {throw new IllegalStateException("Ya existe una sesión de caja abierta.");});
-        WorkWeek activeWeek = workWeekRepository.findByStatus(WorkWeekStatus.ABIERTA)
-                .orElseThrow(() -> new IllegalStateException("No hay ninguna semana de trabajo activa configurada."));
-        var employee = employeeRepository.findById(employeeId)
+        Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new IllegalArgumentException("No existe el employee con el id: " + employeeId));
-        CashSession newSession = new CashSession(activeWeek, employee, openingCash);
+        WorkWeek validWeek = workWeekService.getOrCreateValidWorkWeek();
+        CashSession newSession = new CashSession(validWeek, employee, openingCash);
         return cashSessionRepository.save(newSession);
     }
 

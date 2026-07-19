@@ -24,7 +24,7 @@ public class WorkWeekTemplate {
     private LocalTime startTime = LocalTime.of(6, 0); // Por defecto 6:00 AM
 
     @Column(name = "end_time", nullable = false)
-    private LocalTime endTime = LocalTime.of(2, 0); // Por defecto 2:00 AM (del siguiente lunes)
+    private LocalTime endTime = LocalTime.of(5, 59); // Por defecto 5:59 AM (del siguiente lunes)
 
     public WorkWeekTemplate(DayOfWeek startDay, LocalTime startTime, LocalTime endTime) {
         updateConfig(startDay, startTime, endTime);
